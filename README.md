@@ -5,6 +5,8 @@ to one or more Telegram chats whenever a trigger input goes LOW. Supports WiFi s
 captive portal, WiFi credential reset via a dedicated button, and firmware updates over the air
 via GitHub.
 
+![Hardware wiring diagram](hardware_diagram.svg)
+
 ## Features
 
 - **Modbus RTU read (RS485)** — reads three PLC holding registers (D0, D2, D4 by default) in a
