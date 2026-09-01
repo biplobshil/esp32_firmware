@@ -19,7 +19,9 @@ via GitHub.
   message, so multi-byte UTF-8 text (Bengali script, emoji) transmits correctly.
 - **WiFi setup via captive portal (WiFiManager)** — no hardcoded WiFi credentials. On first boot
   (or after a reset), the ESP32 broadcasts its own setup access point; connecting to it opens a
-  page to enter your WiFi SSID/password, which is then saved to flash.
+  page to enter your WiFi SSID/password, which is then saved to flash. The portal is custom
+  branded ("Boiler Economizer Monitor" title, red buttons) via `setTitle()` and
+  `setCustomHeadElement()`.
 - **WiFi credential reset — two methods:**
   - **BOOT button**: hold during power-up to wipe saved credentials (only works at boot).
   - **Dedicated reset button (GPIO5)**: hold for 3 seconds *at any time* during normal operation
@@ -112,6 +114,19 @@ All user-editable settings are in the `USER CONFIG` block near the top of the `.
 
 > Uploading `firmware.bin` before `version.txt` avoids a window where a device could see the new
 > version number but download the old binary.
+
+## USB Upload vs. GitHub OTA — When to Use Which
+
+- **USB upload** is enough for local development, testing, or a single dev board on your desk.
+  Any code change — including things like portal branding/styling, register mapping, LED
+  behavior, etc. — takes effect immediately once flashed over USB. No GitHub changes required.
+- **GitHub OTA (bump `FIRMWARE_VERSION` → export binary → push `firmware.bin` then
+  `version.txt`)** is only needed when you want devices already deployed in the field — ones
+  you're not physically holding — to receive the update automatically over WiFi.
+
+If you're just iterating on your desk, skip the GitHub round-trip and upload over USB — it's
+faster. Reserve the OTA release flow for changes you actually want to ship to devices already
+installed on-site.
 
 ## Resetting WiFi Credentials
 
